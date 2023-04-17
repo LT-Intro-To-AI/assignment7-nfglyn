@@ -54,9 +54,16 @@ von = NeuralNet(5, 10, 1)
 
 test_data = [
     [1, 1, 1, .1, .1],
-    [.5, .2, .1, .7, .7]
+    [.5, .2, .1, .7, .7],
+    [.8, .3, .3, .3, .8],
+    [.8, .3, .3, .8, .3],
+    [.9, .8, .8, .3, .6]
 ]
 
 von.train(voter_opinion_data)
 # print(von.evaluate((test_data[0])))
-print(f"case1: {test_data[0]} evaluates to {von.evaluate(test_data[0])}")
+print(f"case 1: {test_data[0]} evaluates to {von.evaluate(test_data[0])}")
+print(f"case 2: {test_data[1]} evaluates to {von.evaluate(test_data[1])}")
+print(f"case 3: {test_data[2]} evaluates to {von.evaluate(test_data[2])}")
+print(f"case 4: {test_data[3]} evaluates to {von.evaluate(test_data[3])}")
+print(f"case 5: {test_data[4]} evaluates to {von.evaluate(test_data[4])}")
