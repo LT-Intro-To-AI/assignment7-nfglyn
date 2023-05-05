@@ -12,39 +12,39 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
         tuple of input list and output list
     """
     tokens = line.split(",")
-    out = int(tokens[11])
+    out = int(tokens[10])
 
-    if out is 0:
+    if out == 0:
         #convert into 4 digit table so no repeats
         output = [0,0,0,1]
-    if out is 1:
+    if out == 1:
         #convert into 4 digit table so no repeats
         output = [0,0,1,1]
-    if out is 2:
+    if out == 2:
         #convert into 4 digit table so no repeats
         output = [0,1,1,1]
-    if out is 3:
+    if out == 3:
         #convert into 4 digit table so no repeats
         output = [1,1,1,1]
-    if out is 4:
+    if out == 4:
         #convert into 4 digit table so no repeats
         output = [1,0,0,0]
-    if out is 5:
+    if out == 5:
         #convert into 4 digit table so no repeats
         output = [1,1,0,0]
-    if out is 6:
+    if out == 6:
         #convert into 4 digit table so no repeats
         output = [1,1,1,0]
-    if out is 7:
+    if out == 7:
         #convert into 4 digit table so no repeats
         output = [1,1,0,1]
-    if out is 8:
+    if out == 8:
         #convert into 4 digit table so no repeats
         output = [1,0,1,0]
-    if out is 9:
+    if out == 9:
         #convert into 4 digit table so no repeats
         output = [1,0,1,1]
-    inpt = [float(x) for x in tokens[1:]]
+    inpt = [float(x) for x in tokens[:10]]
     return (inpt, output)
 
 
@@ -73,7 +73,7 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
             data[i][0][j] = (data[i][0][j] - leasts[j]) / (mosts[j] - leasts[j])
     return data
 
-poker = NeuralNet(10, 6, 1)
+poker = NeuralNet(10, 3, 1)
 
 # poker_hard_training = [
 #     ([.1, 1, .1, .11, .1, .13, .1, .12, .1, .1], [.9]),
@@ -134,18 +134,36 @@ poker = NeuralNet(10, 6, 1)
 #     [.2, .1, .4, .4, .1, .4, .11, .3, .7],
 #     [.1, .4, .4, .1, .4, .12, .2, .3, .4, .13],
 # ]
+
+# test_data = normalize("poker-hand-testing.data", "r")
+# for test
+# test_data 
 with open("poker-hand-training-true.data", "r") as f:
-    poker_hand_training = [parse_line(line) for line in f.readlines() if len(line) > 4]
+    training_data = [parse_line(line) for line in f.readlines() if len(line) > 4] 
 
-poker.train(poker_hand_training)
+# for line in training_data:
+#     print(line)
 
-# print(f"case 1: {test_data_1[0]} evaluates to {poker.evaluate(test_data_1[0])} actual result: ")
-# print(f"case 2: {test_data_1[1]} evaluates to {poker.evaluate(test_data_1[1])} actual result: ")
-# print(f"case 3: {test_data_1[2]} evaluates to {poker.evaluate(test_data_1[2])} actual result: ")
-# print(f"case 4: {test_data_1[3]} evaluates to {poker.evaluate(test_data_1[3])} actual result: ")
-# print(f"case 5: {test_data_1[4]} evaluates to {poker.evaluate(test_data_1[4])} actual result: ")
-# print(f"case 6: {test_data_1[5]} evaluates to {poker.evaluate(test_data_1[5])} actual result: ")
-# print(f"case 7: {test_data_1[6]} evaluates to {poker.evaluate(test_data_1[6])} actual result: ")
-# print(f"case 8: {test_data_1[7]} evaluates to {poker.evaluate(test_data_1[7])} actual result: ")
-# print(f"case 9: {test_data_1[8]} evaluates to {poker.evaluate(test_data_1[8])} actual result: ")
-# print(f"case 10: {test_data_1[9]} evaluates to {poker.evaluate(test_data_1[9])} actual result: ")
+poker_hand_training = normalize(training_data)
+
+# for line in poker_hand_training:
+#     print(line)
+
+train_data, test_data = train_test_split(poker_hand_training, test_size=0.1, train_size= 0.1, random_state= 3)
+poker.train(train_data)
+print(test_data)
+
+# poker.train(poker_hand_training)
+
+
+
+print(f"case 1: {test_data[0]} evaluates to {poker.evaluate(test_data[0])} actual result: {test_data[0][10]} ")
+print(f"case 2: {test_data[1]} evaluates to {poker.evaluate(test_data[1])} actual result: {test_data[1][10]} ")
+print(f"case 3: {test_data[2]} evaluates to {poker.evaluate(test_data[2])} actual result: {test_data[2][10]} ")
+print(f"case 4: {test_data[3]} evaluates to {poker.evaluate(test_data[3])} actual result: {test_data[3][10]} ")
+print(f"case 5: {test_data[4]} evaluates to {poker.evaluate(test_data[4])} actual result: {test_data[4][10]} ")
+print(f"case 6: {test_data[5]} evaluates to {poker.evaluate(test_data[5])} actual result: {test_data[5][10]} ")
+print(f"case 7: {test_data[6]} evaluates to {poker.evaluate(test_data[6])} actual result: {test_data[6][10]} ")
+print(f"case 8: {test_data[7]} evaluates to {poker.evaluate(test_data[7])} actual result: {test_data[7][10]} ")
+print(f"case 9: {test_data[8]} evaluates to {poker.evaluate(test_data[8])} actual result: {test_data[8][10]} ")
+print(f"case 10: {test_data[9]} evaluates to {poker.evaluate(test_data[9])} actual result: {test_data[9][10]} ")
