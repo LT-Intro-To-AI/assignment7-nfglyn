@@ -159,12 +159,12 @@ poker_hand_training = normalize(training_data)
 # for line in poker_hand_training:
 #     print(line)
 
-# train_data, test_data = train_test_split(poker_hand_training, test_size=0.1, train_size= 0.1, random_state= 3)
-# poker.train(train_data)
+train_data, test_data = train_test_split(poker_hand_training, test_size=0.1, train_size= 0.1, random_state= 3)
+poker.train(train_data)
 # print(test_data)
-with open("poker-hand-testing.data", "r") as f:
-    testing_data = [parse_line(line) for line in f.readlines() if len(line) > 4] 
-test_data = normalize(testing_data)
+# with open("poker-hand-testing.data", "r") as f:
+#     testing_data = [parse_line(line) for line in f.readlines() if len(line) > 4] 
+# test_data = normalize(testing_data)
 
 poker.train(poker_hand_training)
 
