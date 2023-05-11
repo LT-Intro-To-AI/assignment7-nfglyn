@@ -15,35 +15,45 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
     out = int(tokens[10])
 
     if out == 0:
+        #nothing in hand
         #convert into 4 digit table so no repeats
-        output = [0,0,0,1]
+        output = [0,0,0,0]
     if out == 1:
-        #convert into 4 digit table so no repeats
-        output = [0,0,1,1]
-    if out == 2:
-        #convert into 4 digit table so no repeats
-        output = [0,1,1,1]
-    if out == 3:
-        #convert into 4 digit table so no repeats
-        output = [1,1,1,1]
-    if out == 4:
+        #pair
         #convert into 4 digit table so no repeats
         output = [1,0,0,0]
-    if out == 5:
+    if out == 2:
+        #2 pair
         #convert into 4 digit table so no repeats
+        output = [0,1,0,0]
+    if out == 3:
+        #3 of a kind
+        #convert into 4 digit table so no repeats
+        output = [0,0,1,0]
+    if out == 4:
+        #straight
         output = [1,1,0,0]
+    if out == 5:
+        #flush
+        #convert into 4 digit table so no repeats
+        output = [0,0,0,1]
     if out == 6:
-        #convert into 4 digit table so no repeats
-        output = [1,1,1,0]
-    if out == 7:
-        #convert into 4 digit table so no repeats
-        output = [1,1,0,1]
-    if out == 8:
+        #full house
         #convert into 4 digit table so no repeats
         output = [1,0,1,0]
-    if out == 9:
+    if out == 7:
+        #four of a kind
         #convert into 4 digit table so no repeats
-        output = [1,0,1,1]
+        output = [1,1,1,0]
+    if out == 8:
+        #straight flush
+        #convert into 4 digit table so no repeats
+        output = [0,1,0,1]
+    if out == 9:
+        #royal flush
+        #convert into 4 digit table so no repeats
+        output = [1,0,0,1]
+        
     inpt = [float(x) for x in tokens[:10]]
     return (inpt, output)
 
@@ -73,7 +83,7 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
             data[i][0][j] = (data[i][0][j] - leasts[j]) / (mosts[j] - leasts[j])
     return data
 
-poker = NeuralNet(10, 3, 1)
+poker = NeuralNet(10, 5, 4)
 
 # poker_hard_training = [
 #     ([.1, 1, .1, .11, .1, .13, .1, .12, .1, .1], [.9]),
@@ -155,15 +165,16 @@ print(test_data)
 
 # poker.train(poker_hand_training)
 
+for i in poker.test_with_expected(test_data):
+    print(f"desired: {i[1]}, actual: {i[2]}")
 
-
-print(f"case 1: {test_data[0]} evaluates to {poker.evaluate(test_data[0])} actual result: {test_data[0][10]} ")
-print(f"case 2: {test_data[1]} evaluates to {poker.evaluate(test_data[1])} actual result: {test_data[1][10]} ")
-print(f"case 3: {test_data[2]} evaluates to {poker.evaluate(test_data[2])} actual result: {test_data[2][10]} ")
-print(f"case 4: {test_data[3]} evaluates to {poker.evaluate(test_data[3])} actual result: {test_data[3][10]} ")
-print(f"case 5: {test_data[4]} evaluates to {poker.evaluate(test_data[4])} actual result: {test_data[4][10]} ")
-print(f"case 6: {test_data[5]} evaluates to {poker.evaluate(test_data[5])} actual result: {test_data[5][10]} ")
-print(f"case 7: {test_data[6]} evaluates to {poker.evaluate(test_data[6])} actual result: {test_data[6][10]} ")
-print(f"case 8: {test_data[7]} evaluates to {poker.evaluate(test_data[7])} actual result: {test_data[7][10]} ")
-print(f"case 9: {test_data[8]} evaluates to {poker.evaluate(test_data[8])} actual result: {test_data[8][10]} ")
-print(f"case 10: {test_data[9]} evaluates to {poker.evaluate(test_data[9])} actual result: {test_data[9][10]} ")
+# print(f"case 1: {test_data[0]} evaluates to {poker.evaluate(test_data)} actual result: {test_data[0][10]} ")
+# print(f"case 2: {test_data[1]} evaluates to {poker.evaluate(test_data[1])} actual result: {test_data[1][10]} ")
+# print(f"case 3: {test_data[2]} evaluates to {poker.evaluate(test_data[2])} actual result: {test_data[2][10]} ")
+# print(f"case 4: {test_data[3]} evaluates to {poker.evaluate(test_data[3])} actual result: {test_data[3][10]} ")
+# print(f"case 5: {test_data[4]} evaluates to {poker.evaluate(test_data[4])} actual result: {test_data[4][10]} ")
+# print(f"case 6: {test_data[5]} evaluates to {poker.evaluate(test_data[5])} actual result: {test_data[5][10]} ")
+# print(f"case 7: {test_data[6]} evaluates to {poker.evaluate(test_data[6])} actual result: {test_data[6][10]} ")
+# print(f"case 8: {test_data[7]} evaluates to {poker.evaluate(test_data[7])} actual result: {test_data[7][10]} ")
+# print(f"case 9: {test_data[8]} evaluates to {poker.evaluate(test_data[8])} actual result: {test_data[8][10]} ")
+# print(f"case 10: {test_data[9]} evaluates to {poker.evaluate(test_data[9])} actual result: {test_data[9][10]} ")
