@@ -159,16 +159,20 @@ poker_hand_training = normalize(training_data)
 # for line in poker_hand_training:
 #     print(line)
 
-train_data, test_data = train_test_split(poker_hand_training, test_size=0.1, train_size= 0.1, random_state= 3)
-poker.train(train_data)
-print(test_data)
+# train_data, test_data = train_test_split(poker_hand_training, test_size=0.1, train_size= 0.1, random_state= 3)
+# poker.train(train_data)
+# print(test_data)
+with open("poker-hand-testing.data", "r") as f:
+    testing_data = [parse_line(line) for line in f.readlines() if len(line) > 4] 
+test_data = normalize(testing_data)
 
-# poker.train(poker_hand_training)
+poker.train(poker_hand_training)
 
 for i in poker.test_with_expected(test_data):
     print(f"desired: {i[1]}, actual: {i[2]}")
 
-# print(f"case 1: {test_data[0]} evaluates to {poker.evaluate(test_data)} actual result: {test_data[0][10]} ")
+
+# print(f"case 1: {test_data[0]} evaluates to {poker.evaluate(test_data[0])} actual result: {test_data[0][10]} ")
 # print(f"case 2: {test_data[1]} evaluates to {poker.evaluate(test_data[1])} actual result: {test_data[1][10]} ")
 # print(f"case 3: {test_data[2]} evaluates to {poker.evaluate(test_data[2])} actual result: {test_data[2][10]} ")
 # print(f"case 4: {test_data[3]} evaluates to {poker.evaluate(test_data[3])} actual result: {test_data[3][10]} ")
